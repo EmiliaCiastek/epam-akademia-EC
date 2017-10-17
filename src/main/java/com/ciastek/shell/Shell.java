@@ -11,6 +11,7 @@ public class Shell {
     private ShellDirectory directory;
     private boolean running = true;
     private HashMap<String, Command> possibleCommands;
+    private String prompt = "$>";
 
     public Shell(){
         directory = new ShellDirectory();
@@ -32,9 +33,16 @@ public class Shell {
            currentCommand.executeCommand(directory);
         } else if (command.equals("exit")){
             running = false;
-        } else {
+        } else if (receivedCommand.equals("prompt $cwd")){ //TODO: Move to new class
+            prompt = directory.getCurrentDirectory().getAbsolutePath() + ">";
+        }
+        else {
             System.out.println(receivedCommand + ": unknown command");
         }
+    }
+
+    public String getPrompt(){
+        return prompt;
     }
 
     public boolean isRunning(){

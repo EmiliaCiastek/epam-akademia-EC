@@ -10,7 +10,7 @@ public class ShellApplication {
         shell = new Shell();
 
         while (shell.isRunning()){
-            System.out.print("$>");
+            System.out.print(shell.getPrompt());
             String command = input.nextLine();
             shell.receiveCommand(command);
         }

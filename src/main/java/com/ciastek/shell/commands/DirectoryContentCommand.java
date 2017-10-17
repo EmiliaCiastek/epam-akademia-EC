@@ -1,4 +1,7 @@
-package com.ciastek.shell;
+package com.ciastek.shell.commands;
+
+import com.ciastek.shell.ShellDirectory;
+import com.ciastek.shell.commands.Command;
 
 import java.io.File;
 

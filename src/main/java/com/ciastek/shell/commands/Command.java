@@ -1,4 +1,6 @@
-package com.ciastek.shell;
+package com.ciastek.shell.commands;
+
+import com.ciastek.shell.ShellDirectory;
 
 public abstract class Command {
     public String[] commandParameters;

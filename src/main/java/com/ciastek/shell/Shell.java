@@ -1,5 +1,10 @@
 package com.ciastek.shell;
 
+import com.ciastek.shell.commands.ChangeDirectoryCommand;
+import com.ciastek.shell.commands.Command;
+import com.ciastek.shell.commands.DirectoryContentCommand;
+import com.ciastek.shell.commands.TreeCommand;
+
 import java.util.HashMap;
 
 public class Shell {
@@ -12,11 +17,10 @@ public class Shell {
         possibleCommands = new HashMap<>();
         possibleCommands.put("cd", new ChangeDirectoryCommand());
         possibleCommands.put("dir", new DirectoryContentCommand());
+        possibleCommands.put("tree", new TreeCommand());
     }
 
     public void receiveCommand(String receivedCommand){
-        System.out.println("directory: " + directory.getCurrentDirectory());
-
         String[] commandParameters = receivedCommand.split(" ");
         String command = commandParameters[0];
 
@@ -27,10 +31,8 @@ public class Shell {
         } else if (command.equals("exit")){
             running = false;
         } else {
-            System.out.println(command + ": unknown command");
+            System.out.println(receivedCommand + ": unknown command");
         }
-
-        System.out.println("directory: " + directory.getCurrentDirectory());
     }
 
     public boolean isRunning(){

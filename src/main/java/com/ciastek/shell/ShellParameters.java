@@ -5,6 +5,7 @@ import java.io.File;
 public class ShellParameters {
     private File currentDirectory;
     private String promptValue = "$>";
+    private boolean isPromptDirectory = false;
 
     public ShellParameters(){
         currentDirectory = new File(System.getProperty("user.dir"));
@@ -29,5 +30,17 @@ public class ShellParameters {
 
     public String getPrompt() {
         return promptValue;
+    }
+
+    public boolean isPromptDirectory() {
+        return isPromptDirectory;
+    }
+
+    public void setPromptDirectory(boolean promptDirectory) {
+        isPromptDirectory = promptDirectory;
+    }
+
+    public void updatePrompt(File newDirectory){
+        promptValue = newDirectory.getAbsolutePath() + ">";
     }
 }

@@ -1,23 +1,31 @@
 package com.ciastek.shell.commands;
 
 import com.ciastek.shell.ShellParameters;
-
 import java.io.File;
 
 public class ChangeDirectoryCommand extends Command {
 
+    private File newDirectory;
     @Override
     public void executeCommand(ShellParameters parameters) {
         File currentDirectory = parameters.getCurrentDirectory();
         if(commandParameters.length > 1) {
             if (commandParameters[1].equals("..")) {
-                parameters.setCurrentDirectory(new File(currentDirectory.getParent()));
+                newDirectory = new File(currentDirectory.getParent());
+                parameters.setCurrentDirectory(newDirectory);
             } else {
-                File newDirectory = new File(currentDirectory.getAbsolutePath() + "\\" + commandParameters[1]);
+                newDirectory = new File(currentDirectory.getAbsolutePath() + "\\" + commandParameters[1]);
                 if (newDirectory.isDirectory()) {
                     parameters.setCurrentDirectory(newDirectory);
                 }
             }
+
+            updatePrompt(parameters);
         }
+    }
+
+    private void updatePrompt(ShellParameters parameters){
+        if (parameters.isPromptDirectory())
+            parameters.updatePrompt(newDirectory);
     }
 }

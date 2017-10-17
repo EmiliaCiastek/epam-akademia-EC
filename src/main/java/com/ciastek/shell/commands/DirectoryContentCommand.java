@@ -13,17 +13,20 @@ public class DirectoryContentCommand extends Command {
 
     private void getContentOfCurrentDirectory(File directory) {
         File files[] =  directory.listFiles();
-
-        String commandResult = "Content of " + directory.getAbsolutePath();
+        StringBuilder builder = new StringBuilder();
+        builder.append("Content of ")
+                .append(directory.getAbsolutePath());
 
         for (File file:files) {
             if (file.isFile()){
-                commandResult += "\nFILE \t" + file.getName();
+                builder.append("\nFILE \t")
+                        .append(file.getName());
             } else {
-                commandResult += "\nDIR \t" + file.getName();
+                builder.append("\nDIR \t")
+                        .append(file.getName());
             }
         }
 
-        System.out.println(commandResult);
+        System.out.println(builder.toString());
     }
 }

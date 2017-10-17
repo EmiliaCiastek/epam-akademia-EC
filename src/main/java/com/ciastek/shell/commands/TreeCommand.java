@@ -11,17 +11,23 @@ public class TreeCommand extends Command {
     }
 
     private String getDirectorySubtree(File directory){
-        String result = directory.getName() + "\n";
+        StringBuilder builder = new StringBuilder();
         File[] files = directory.listFiles();
 
+        builder.append(directory.getName())
+                .append("\n")
+                .append("-");
+
         for (File file:files) {
-            result += "-";
+            builder.append("-");
             if (file.isDirectory()){
-                result += getDirectorySubtree(file);
+                builder.append(getDirectorySubtree(file));
             } else {
-                result += "-" + file.getName() + "\n";
+                builder.append("-")
+                        .append(file.getName())
+                        .append("\n");
             }
         }
-        return result;
+        return builder.toString();
     }
 }

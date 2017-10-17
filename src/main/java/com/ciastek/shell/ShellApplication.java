@@ -13,7 +13,7 @@ public class ShellApplication {
         while (shell.isRunning()){
             System.out.print("$>");
             String command = input.nextLine();
-            System.out.println(shell.receiveCommand(command));
+            shell.receiveCommand(command);
         }
     }
 }

@@ -1,60 +1,39 @@
 package com.ciastek.shell;
 
-import java.io.File;
 import java.util.HashMap;
 
 public class Shell {
-    private String commandResult = "";
-    private File currentDirectory;
+    private ShellDirectory directory;
     private boolean running = true;
     private HashMap<String, Command> possibleCommands;
 
     public Shell(){
-        currentDirectory = new File(System.getProperty("user.dir"));
+        directory = new ShellDirectory();
         possibleCommands = new HashMap<>();
+        possibleCommands.put("cd", new ChangeDirectoryCommand());
+        possibleCommands.put("dir", new DirectoryContentCommand());
     }
 
-    public String receiveCommand(String receivedCommand){
+    public void receiveCommand(String receivedCommand){
+        System.out.println("directory: " + directory.getCurrentDirectory());
+
         String[] commandParameters = receivedCommand.split(" ");
         String command = commandParameters[0];
 
-        switch (command){
-            case "dir":
-                commandResult += "Content of " + currentDirectory.getAbsolutePath();
-                getContentOfCurrentDirectory();
-                break;
-            case "exit":
-                running = false;
-                commandResult = "";
-                break;
-            case "cd ..":
-                currentDirectory = new File(currentDirectory.getParent());
-                break;
-            default:
-                commandResult = "";
+        if(possibleCommands.containsKey(command)){
+           Command currentCommand =  possibleCommands.get(command);
+           currentCommand.setCommandParameters(commandParameters);
+           currentCommand.executeCommand(directory);
+        } else if (command.equals("exit")){
+            running = false;
+        } else {
+            System.out.println(command + ": unknown command");
         }
 
-        return commandResult;
+        System.out.println("directory: " + directory.getCurrentDirectory());
     }
 
     public boolean isRunning(){
         return running;
     }
-
-    public File getCurrentDirectory(){
-        return currentDirectory;
-    }
-
-    private void getContentOfCurrentDirectory() {
-        File files[] =  currentDirectory.listFiles();
-
-        for (File file:files) {
-            if (file.isFile()){
-                commandResult += "\nFILE \t" + file.getName();
-            } else {
-                commandResult += "\nDIR \t" + file.getName();
-            }
-        }
-    }
-
 }

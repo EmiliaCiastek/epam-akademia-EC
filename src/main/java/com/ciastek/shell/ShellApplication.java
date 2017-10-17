@@ -15,9 +15,5 @@ public class ShellApplication {
             String command = input.nextLine();
             System.out.println(shell.receiveCommand(command));
         }
-
-
-
-
     }
 }

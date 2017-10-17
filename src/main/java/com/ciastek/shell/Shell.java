@@ -1,26 +1,23 @@
 package com.ciastek.shell;
 
-import com.ciastek.shell.commands.ChangeDirectoryCommand;
-import com.ciastek.shell.commands.Command;
-import com.ciastek.shell.commands.DirectoryContentCommand;
-import com.ciastek.shell.commands.TreeCommand;
+import com.ciastek.shell.commands.*;
 
 import java.util.HashMap;
 
 public class Shell {
-    private ShellDirectory directory;
+    private final ShellParameters shellParameters;
     private boolean running = true;
     private HashMap<String, Command> possibleCommands;
-    private String prompt = "$>";
 
     public Shell(){
-        directory = new ShellDirectory();
+        shellParameters = new ShellParameters();
         possibleCommands = new HashMap<>();
         possibleCommands.put("cd", new ChangeDirectoryCommand());
         possibleCommands.put("dir", new DirectoryContentCommand());
         possibleCommands.put("tree", new TreeCommand());
+        possibleCommands.put("prompt", new PromptCommand());
 
-        //TODO: add prompt and statistics commands
+        //TODO: add statistics command
     }
 
     public void receiveCommand(String receivedCommand){
@@ -30,19 +27,16 @@ public class Shell {
         if(possibleCommands.containsKey(command)){
            Command currentCommand =  possibleCommands.get(command);
            currentCommand.setCommandParameters(commandParameters);
-           currentCommand.executeCommand(directory);
+           currentCommand.executeCommand(shellParameters);
         } else if (command.equals("exit")){
             running = false;
-        } else if (receivedCommand.equals("prompt $cwd")){ //TODO: Move to new class
-            prompt = directory.getCurrentDirectory().getAbsolutePath() + ">";
-        }
-        else {
+        } else {
             System.out.println(receivedCommand + ": unknown command");
         }
     }
 
     public String getPrompt(){
-        return prompt;
+        return shellParameters.getPrompt();
     }
 
     public boolean isRunning(){

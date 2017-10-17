@@ -1,15 +1,14 @@
 package com.ciastek.shell.commands;
 
-import com.ciastek.shell.ShellDirectory;
-import com.ciastek.shell.commands.Command;
+import com.ciastek.shell.ShellParameters;
 
 import java.io.File;
 
 public class DirectoryContentCommand extends Command {
 
     @Override
-    public void executeCommand(ShellDirectory directory) {
-        getContentOfCurrentDirectory(directory.getCurrentDirectory());
+    public void executeCommand(ShellParameters parameters) {
+        getContentOfCurrentDirectory(parameters.getCurrentDirectory());
     }
 
     private void getContentOfCurrentDirectory(File directory) {

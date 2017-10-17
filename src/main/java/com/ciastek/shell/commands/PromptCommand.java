@@ -18,7 +18,8 @@ public class PromptCommand extends Command {
         } else if (commandParameter.equals("reset")){
             shellParameters.resetPrompt();
         } else {
-            shellParameters.setPromptValue(commandParameter + ">");
+            String newPrompt = String.join(" ", commandParameters) + ">";
+            shellParameters.setPromptValue(newPrompt);
         }
     }
 }

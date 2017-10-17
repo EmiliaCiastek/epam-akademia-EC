@@ -14,8 +14,8 @@ public class ChangeDirectoryCommand extends Command {
                 newDirectory = new File(currentDirectory.getParent());
                 parameters.setCurrentDirectory(newDirectory);
             } else {
-                newDirectory = new File(currentDirectory.getAbsolutePath() + "\\" + commandParameters[1]);
-                if (newDirectory.isDirectory()) {
+                newDirectory = new File(currentDirectory.getAbsolutePath() + File.pathSeparator + commandParameters[1]);
+                if (newDirectory.exists() && newDirectory.isDirectory()) {
                     parameters.setCurrentDirectory(newDirectory);
                 }
             }
@@ -26,6 +26,6 @@ public class ChangeDirectoryCommand extends Command {
 
     private void updatePrompt(ShellParameters parameters){
         if (parameters.isPromptDirectory())
-            parameters.updatePrompt(newDirectory);
+            parameters.updatePrompt(parameters.getCurrentDirectory());
     }
 }

@@ -18,6 +18,8 @@ public class Shell {
         possibleCommands.put("cd", new ChangeDirectoryCommand());
         possibleCommands.put("dir", new DirectoryContentCommand());
         possibleCommands.put("tree", new TreeCommand());
+
+        //TODO: add prompt and statistics commands
     }
 
     public void receiveCommand(String receivedCommand){

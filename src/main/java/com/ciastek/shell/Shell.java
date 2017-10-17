@@ -22,12 +22,21 @@ public class Shell {
 
     public void receiveCommand(String receivedCommand){
         String[] commandParameters = receivedCommand.split(" ");
+
+        if(commandParameters.length <1)
+            System.out.println(receivedCommand + ": unknown command");
+        else {
+            executeCommand(receivedCommand, commandParameters);
+        }
+    }
+
+    private void executeCommand(String receivedCommand, String[] commandParameters) {
         String command = commandParameters[0];
 
         if(possibleCommands.containsKey(command)){
-           Command currentCommand =  possibleCommands.get(command);
-           currentCommand.setCommandParameters(commandParameters);
-           currentCommand.executeCommand(shellParameters);
+            Command currentCommand =  possibleCommands.get(command);
+            currentCommand.setCommandParameters(commandParameters);
+            currentCommand.executeCommand(shellParameters);
         } else if (command.equals("exit")){
             running = false;
         } else {
